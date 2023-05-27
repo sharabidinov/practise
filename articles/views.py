@@ -18,3 +18,16 @@ def article_home_view(request, id=None):
         "article_object": article_object
     }
     return render(request, context=context_data, template_name='home-detail-view.html')
+
+
+def article_search_view(request):
+    query_dict = request.GET
+    try:
+        query = int(query_dict.get('query'))
+    except:
+        query = None
+    article_object = None
+    if query is not None:
+        article_object = Article.objects.get(id=query)
+    context = {'article_object': article_object}
+    return render(request, context=context, template_name='search.html')
