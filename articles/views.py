@@ -20,6 +20,17 @@ def article_home_view(request, id=None):
     return render(request, context=context_data, template_name='home-detail-view.html')
 
 
+def article_create_view(request):
+    context_data = {}
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        article = Article.objects.create(title=title, content=content)
+        context_data['object'] = article
+        context_data['created'] = True
+    return render(request, context=context_data, template_name='create.html')
+
+
 def article_search_view(request):
     query_dict = request.GET
     try:
